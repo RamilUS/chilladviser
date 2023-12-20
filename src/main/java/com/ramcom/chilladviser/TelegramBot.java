@@ -28,13 +28,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
+            String firstName = update.getMessage().getChat().getFirstName();
 
             switch (messageText) {
                 case "/start":
-                    startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
+                    startCommandReceived(chatId, firstName);
                     break;
                 default:
-                    sendMessage(chatId, "Извини, Юлька!\n" +
+                    sendMessage(chatId, "Извини, " + firstName + "!\n" +
                             "Пока готово только это");
             }
         }
@@ -42,8 +43,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void startCommandReceived(Long chatId, String name) {
-        String answer = "Привет, " + name + ", тебя превествует сервис Chill Adviser!" + "\n" +
-                "Мы поможем тебе провести весело выходные в соотвествии с твоими запросами" + "\n" +
+        String answer = "Привет, " + name + ", тебя привествует сервис Chill Adviser!" + "\n" +
+                "Мы поможем тебе провести весело выходные в соответствии с твоими запросами" + "\n" +
                 "Пока наш сервис в тестовом режиме, но постоянно совершенствуемся." + "\n" +
                 "Подскажи, какой бюджет у твоего чилла?";
         sendMessage(chatId, answer);
